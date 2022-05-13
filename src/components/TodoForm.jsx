@@ -2,28 +2,32 @@ import React, { useState } from 'react'
 
 const TodoForm = (props) => {
    const [task, setTask] = useState("");
-   const complete = false;
+   
+   const handleChange = (e) => {
+      setTask(e.target.value);
+   }
 
-   const handleTaskAdd = (e) => {
+   const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(task)
-      props.onNewTodo({ task: task, complete: complete });
+      props.onSubmit({ id: Math.floor(Math.random() * 100000), todo: task });
       setTask("");
    }
 
    return (
-      <div className="col-6 mt-4 mb-5 mx-auto">
-         <form onSubmit={ handleTaskAdd } className="d-flex justify-content-between align-items-center">
-            <div className="input-group">
-               <span className="input-group-text">New ToDo:</span>
-               <input type="text" name="newTodo" id="newTodo" className="form-control" onChange={ (e) => setTask(e.target.value) } value={ task } />
-            </div>
-            <div>
-               <input type="submit" value="Add" className="btn btn-primary ms-2" />
-            </div>
+      <div className="">
+         <form onSubmit={ handleSubmit } className="todo-form">
+            <input
+               type="text"
+               name="task"
+               placeholder="Add a task..."
+               className="todo-input"
+               onChange={ handleChange }
+               value={ task }
+            />
+            <button className="todo-button">Add</button>
          </form>
       </div>
    )
 }
 
-export default TodoForm
+export default TodoForm;

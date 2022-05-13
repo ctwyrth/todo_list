@@ -1,39 +1,33 @@
 import React, { useState } from 'react'
 
+import TodoForm from './TodoForm';
+
 const TodoList = (props) => {
-   const [listTasks, setListTasks] = useState([]);
-   // setListTasks(tasks);
-   console.log("Task:", props.task);
-   if (props.task && props.task !== listTasks[listTasks.length - 1]) {
-      console.log("If trigerred in TodoList");
-      setListTasks([...listTasks, props.task]);
+   const [tasks, setTasks] = useState([]);
+
+   if (props.task && props.task !== tasks[tasks.length - 1]) {
+      setTasks([...tasks, props.task]);
    }
-   console.log("listTasks:", listTasks);
+   
+   const addTask = task => {
+      if(!task.text || /^\s*$/.test(task.text)) {
+         return;
+      }
+
+      const newTasks = [task, ...tasks];
+      setTasks(newTasks);
+   }
    
    const handleChange = (e, task) => {
       e.preventDefault();
-      console.log(task.type());
-      setListTasks([...listTasks]);
+      // console.log(task.type());
+      setTasks([...tasks]);
    }
 
    return (
-      <div className="col-6 my-4 mx-auto">
-         <table className="table table-striped">
-            <thead className="bg-warning">
-               <tr>
-                  <th className="w-75 ps-3 py-2 text-start">ToDo List Item</th>
-                  <th className="p-2">Completed</th>
-               </tr>
-            </thead>
-            <tbody>
-               { listTasks.map( (task,idx) => (
-                  <tr key={idx}>
-                     <td>{ task.task }</td>
-                     <td><input type="checkbox" name="complete" id="complete" checked={ task.complete } onChange={ (e) => { handleChange(e, this) }} /></td>
-                  </tr>
-               ))}
-            </tbody>
-         </table>
+      <div>
+         <h1>What's the plan for today?</h1>
+         <TodoForm />
       </div>
    )
 }
