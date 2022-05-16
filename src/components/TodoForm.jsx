@@ -11,7 +11,7 @@ function TodoForm(props) {
       }
 
       focus.current.focus();
-   })
+   }, []);
    
    const handleChange = (e) => {
       setTask(e.target.value);
@@ -30,12 +30,12 @@ function TodoForm(props) {
                type="text"
                name="task"
                placeholder="Add a task..."
-               className="todo-input"
+               className={ props.edit ? 'todo-input edit' : 'todo-input' }
                onChange={ handleChange }
                value={ task }
                ref={ focus }
             />
-            <button className="todo-button">Add</button>
+            { props.edit ? <button className="todo-button edit">Update</button> : <button className="todo-button">Add</button> }
          </form>
       </div>
    )
